@@ -1,0 +1,24 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duongdv95/blog.git"
+  },
+  "author": "Daniel Duong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duongdv95/blog/issues"
+  },
+  "homepage": "https://github.com/duongdv95/blog#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.8",
+    "express": "^4.16.3"
+  }
+}
