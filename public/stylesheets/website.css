@@ -6,3 +6,26 @@ body {
 input, textarea {
     display:block;
 }
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 500px;
+}
+
+.fill img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+    position: relative;
+    z-index: -1;
+}
+
+/*.text-block {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*}*/
+

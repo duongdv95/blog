@@ -2,7 +2,8 @@ var express = require("express"),
     app = express(),
     bodyParser = require('body-parser'),
     methodOverride = require("method-override"),
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+    moment = require("moment");
     
 
 // APP CONFIG
@@ -11,7 +12,15 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+moment().format();
 
+// passes objects to all routes
+app.use(function(req,res,next){
+    res.locals = {
+        moment:moment
+    };
+    return next();
+});
 var db = mongoose.connection;
 db.on("error", console.error.bind(console,"connection error"));
 db.once("open", function(){
@@ -63,9 +72,9 @@ app.get("/blog", function(req,res){
 // NEW ROUTE
 app.get("/blog/new", function(req,res){
     res.render("blog/new");
-})
+});
 
-// POST ROUTE
+// CREATE ROUTE
 app.post("/blog", function(req,res){
     var newBlogPost = req.body.blog;
     Blog.create(newBlogPost, function(err,blogPost){
@@ -73,6 +82,39 @@ app.post("/blog", function(req,res){
             console.log(err);
         } else {
             res.redirect("blog");
+        }
+    });
+});
+
+// SHOW ROUTE
+app.get("/blog/:id", function(req,res){
+    Blog.findById(req.params.id, function(err, blogPost){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("blog/show", {blogPost: blogPost});
+        }
+    });
+});
+
+// EDIT ROUTE
+app.get("/blog/:id/edit", function(req,res){
+    Blog.findById(req.params.id, function(err, blogPost){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("blog/edit", {blogPost: blogPost});
+        }
+    });
+});
+
+// PUT ROUTE
+app.put("/blog/:id", function(req,res){
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedPost) {
+        if(err){
+            res.redirect("/blog/" + req.params.id);
+        } else {
+            res.redirect("/blog/" + req.params.id);
         }
     });
 });

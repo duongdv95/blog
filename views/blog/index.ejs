@@ -1,12 +1,22 @@
 <% include ../partials/header %>
-<div class="container">
-    <h1>Blog Page</h1>
-    <% blogs.forEach(function(post){ %>
-        <%= post.title %>
-        <img src="<%= post.image %>">
-        <%= post.body %>
-    <% }); %>
-    <a href="blog/new">New Post</a>
+<div>
+    <h1>My Blog</h1>
 </div>
+<!--<div class="container">-->
+    <% blogs.forEach(function(post){ %>
+        <div class="fill">
+            <img src="<%= post.image %>">
+        </div>
+        <strong><%= post.title %></strong>
+        <div>
+            <a href="/blog/<%= post._id %>">Read More</a>
+        </div>
+
+    <% }); %>
+    <div>
+        <a href="blog/new">New Post</a>
+    </div>
+    
+<!--</div>-->
 
 <% include ../partials/footer %>

@@ -1,0 +1,16 @@
+<% include ../partials/header %>
+
+<div>
+    <strong><%= blogPost.title %></strong>
+</div>
+<div>
+    Created <%= moment(blogPost.created).format("dddd, MMMM Do YYYY, h:mm a"); %>
+</div>
+<img src="<%= blogPost.image %>">
+<div>
+    <%= blogPost.body %>
+</div>
+
+
+    
+<% include ../partials/footer %>
