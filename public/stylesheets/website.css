@@ -23,6 +23,9 @@ input, textarea {
     z-index: -1;
 }
 
+#delete {
+    display:inline;
+}
 /*.text-block {*/
 /*    position: absolute;*/
 /*    top: 50%;*/
