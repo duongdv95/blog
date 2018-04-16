@@ -1,14 +1,82 @@
 var express = require("express"),
     app = express(),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    methodOverride = require("method-override"),
+    mongoose = require("mongoose");
     
+
+// APP CONFIG
+mongoose.connect("mongodb://localhost/blogApp");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+
+var db = mongoose.connection;
+db.on("error", console.error.bind(console,"connection error"));
+db.once("open", function(){
+    console.log("we're connected!");
+});
+// MONGOOSE/CONTROLLER CONFIG
+var Schema = mongoose.Schema;
+var blogSchema = new Schema({
+    title: String,
+    image: String,
+    body: String,
+    created: {type: Date, default: Date.now}
+})
+
+var Blog = mongoose.model("Blog", blogSchema);
+
 
 app.get("/", function(req,res){
     res.render("home");
 })
+
+app.get("/about", function(req,res){
+    res.render("about");
+})
+
+app.get("/projects", function(req,res){
+    res.render("projects");
+})
+
+app.get("/resume", function(req,res){
+    res.render("resume");
+})
+
+// ==================
+//   RESTful ROUTES
+// ==================
+
+// INDEX ROUTE
+app.get("/blog", function(req,res){
+    Blog.find({}, function(err, allBlogs){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("blog/index", {blogs:allBlogs});
+        }
+    });
+});
+
+// NEW ROUTE
+app.get("/blog/new", function(req,res){
+    res.render("blog/new");
+})
+
+// POST ROUTE
+app.post("/blog", function(req,res){
+    var newBlogPost = req.body.blog;
+    Blog.create(newBlogPost, function(err,blogPost){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("blog");
+        }
+    });
+});
+
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server has started..")
-})
+});

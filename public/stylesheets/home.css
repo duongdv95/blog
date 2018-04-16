@@ -1,0 +1,15 @@
+#home-header {
+    position: relative;
+    text-align: center;
+    padding-top: 40vh;
+}
+
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+    background: #FBD3E9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #BB377D, #FBD3E9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #BB377D, #FBD3E9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

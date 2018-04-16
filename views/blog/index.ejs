@@ -1,0 +1,12 @@
+<% include ../partials/header %>
+<div class="container">
+    <h1>Blog Page</h1>
+    <% blogs.forEach(function(post){ %>
+        <%= post.title %>
+        <img src="<%= post.image %>">
+        <%= post.body %>
+    <% }); %>
+    <a href="blog/new">New Post</a>
+</div>
+
+<% include ../partials/footer %>
