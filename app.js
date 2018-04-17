@@ -117,7 +117,7 @@ app.get("/blog", function(req,res){
 
 // NEW ROUTE
 app.get("/blog/new", function(req,res){
-    res.render("blog/new");
+    res.render("blog/new", {empty:empty()});
 });
 
 // CREATE ROUTE
@@ -185,6 +185,17 @@ var isLoggedIn = function(req, res, next){
         return next();
     }
     res.redirect("/blog");
+}
+
+function empty() {
+    var x;
+    x = document.querySelectorAll("input");
+    for(var i = 0; i < x.length; i++){
+        if (x[i] == "") {
+            alert("Please fill out all forms");
+            return false
+        }
+    }
 }
 
 app.listen(process.env.PORT, process.env.IP, function() {
