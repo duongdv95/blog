@@ -81,7 +81,7 @@ app.post("/blog", function(req,res){
         if(err){
             console.log(err);
         } else {
-            res.redirect("blog");
+            res.redirect("/blog");
         }
     });
 });
@@ -108,7 +108,7 @@ app.get("/blog/:id/edit", function(req,res){
     });
 });
 
-// PUT ROUTE
+// UPDATE ROUTE
 app.put("/blog/:id", function(req,res){
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedPost) {
         if(err){
@@ -117,6 +117,17 @@ app.put("/blog/:id", function(req,res){
             res.redirect("/blog/" + req.params.id);
         }
     });
+});
+
+// DESTROY ROUTE
+app.delete("/blog/:id", function(req,res){
+  Blog.findByIdAndRemove(req.params.id, function(err){
+      if(err){
+          res.redirect("/blog"); 
+      } else {
+          res.redirect("/blog");
+      }
+  });
 });
 
 app.listen(process.env.PORT, process.env.IP, function() {
