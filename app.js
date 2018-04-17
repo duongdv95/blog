@@ -3,7 +3,10 @@ var express = require("express"),
     bodyParser = require('body-parser'),
     methodOverride = require("method-override"),
     mongoose = require("mongoose"),
-    moment = require("moment");
+    moment = require("moment"),
+    passport = require("passport"),
+    LocalStrategy = require("passport-local"),
+    passportLocalMongoose = require("passport-local-mongoose");
     
 
 // APP CONFIG
@@ -28,15 +31,35 @@ db.once("open", function(){
 });
 // MONGOOSE/CONTROLLER CONFIG
 var Schema = mongoose.Schema;
+
+var userSchema = new Schema({
+    username: String,
+    password: String
+});
+
+userSchema.plugin(passportLocalMongoose);
+
 var blogSchema = new Schema({
     title: String,
     image: String,
     body: String,
     created: {type: Date, default: Date.now}
-})
+});
 
+var User = mongoose.model("User", userSchema);
 var Blog = mongoose.model("Blog", blogSchema);
 
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret:"Merp",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function(req,res){
     res.render("home");
@@ -54,6 +77,29 @@ app.get("/resume", function(req,res){
     res.render("resume");
 })
 
+app.get("/admin", function(req,res){
+    res.render("admin");
+})
+
+app.post("/admin", passport.authenticate("local", 
+    {
+        successRedirect:"/blog",
+        failureRedirect:"/admin"
+    }), function(req,res){
+});
+
+// app.post("/admin", function(req,res){
+//     var newUser = new User({username: req.body.username});
+//     User.register(newUser,req.body.password, function(err, user) {
+//         if(err){
+//             console.log(err);
+//             return res.render("admin",{error: err.message});
+//         }
+//         passport.authenticate("local")(req, res, function(){
+//             res.redirect("/");
+//         });
+//     });
+// });
 // ==================
 //   RESTful ROUTES
 // ==================
@@ -129,6 +175,17 @@ app.delete("/blog/:id", function(req,res){
       }
   });
 });
+
+app.get("*", function(req,res){
+    res.send("Error! Page does not exist")
+})
+
+var isLoggedIn = function(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/blog");
+}
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server has started..")
