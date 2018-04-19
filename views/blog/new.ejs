@@ -1,21 +1,34 @@
 <% include ../partials/header %>
 
-<h1>New Blog Post</h1>
-<form action="/blog" method="POST">
-    <div class="form-group">
-        <label>Title</label>
-        <input type="text" name="blog[title]" placeholder="title"></input>
-    </div>
-    <div class="form-group">
-        <label>Image</label>
-        <input type="text" name="blog[image]" placeholder="image URL"></input>
-    </div>
-    <div class="form-group">
-        <label>Body</label>
-        <textarea name="blog[body]"></textarea>
-    </div>
-    <input type="submit" onClick="<%=empty %>">
-</form>
+<div class="container">
+    <h1>New Blog Post</h1>
+    <form action="/blog" method="POST" id="form">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="blog[title]" placeholder="title" id="title"></input>
+        </div>
+        <div class="form-group">
+            <label>Image</label>
+            <input type="text" name="blog[image]" placeholder="image URL" id="image"></input>
+        </div>
+        <div class="form-group">
+            <label>Body</label>
+            <textarea name="blog[body]" id="body"></textarea>
+        </div>
+        <input type="submit">
+    </form>
+</div>
 
 <% include ../partials/footer %>
+
+<script>
+    $("#form").submit(function() {
+        var title = $.trim($("#title").val());
+        var image = $.trim($("#image").val());;
+        var body = $.trim($("#body").val())
+        if (title === "" || image === "" || body === ""){
+            return false;
+        }
+    });
+</script>
 

@@ -7,7 +7,7 @@ var express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose");
-    
+
 
 // APP CONFIG
 mongoose.connect("mongodb://localhost/blogApp");
@@ -20,7 +20,9 @@ moment().format();
 // passes objects to all routes
 app.use(function(req,res,next){
     res.locals = {
-        moment:moment
+        moment:moment,
+        query : req.query,
+        url   : req.originalUrl
     };
     return next();
 });
@@ -73,8 +75,8 @@ app.get("/projects", function(req,res){
     res.render("projects");
 })
 
-app.get("/resume", function(req,res){
-    res.render("resume");
+app.get("/contact", function(req,res){
+    res.render("contact");
 })
 
 app.get("/admin", function(req,res){
@@ -117,7 +119,7 @@ app.get("/blog", function(req,res){
 
 // NEW ROUTE
 app.get("/blog/new", function(req,res){
-    res.render("blog/new", {empty:empty()});
+    res.render("blog/new");
 });
 
 // CREATE ROUTE
@@ -185,17 +187,6 @@ var isLoggedIn = function(req, res, next){
         return next();
     }
     res.redirect("/blog");
-}
-
-function empty() {
-    var x;
-    x = document.querySelectorAll("input");
-    for(var i = 0; i < x.length; i++){
-        if (x[i] == "") {
-            alert("Please fill out all forms");
-            return false
-        }
-    }
 }
 
 app.listen(process.env.PORT, process.env.IP, function() {

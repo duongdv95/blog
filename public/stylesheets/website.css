@@ -1,12 +1,82 @@
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 500px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 830px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 830px;
+  }
+}
+
+/*NAVBAR STYLE*/
+
+.nav-items {
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    font-size: 1.3rem;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    /*padding-top: 10px;*/
+    /*padding-bottom: 10px;*/
+    display: block;
+    text-align: center;
+    
+}
+
+li.nav-item {
+    display: inline-block;
+}
+
+.align-right {
+    float: right;
+}
+
+.brand {
+    font-weight: 700;
+}
+
+#special {
+    padding-left:0;
+    padding-right:0;
+}
+
+/* Change the link color on hover */
+.nav-item a:hover {
+    background-color: #555;
+    color: white;
+}
+/*Style every page*/
 html, 
 body {
     height: 100%;
+    margin: 0;
+    font-family: Arial;
 }
 
+/*edit.ejs style*/
 input, textarea {
-    display:block;
+    display: block;
 }
 
+/*index.ejs style*/
 .fill {
     display: flex;
     justify-content: center;
@@ -23,12 +93,29 @@ input, textarea {
     z-index: -1;
 }
 
+/*Fixes delete position in show.ejs*/
 #delete {
     display:inline;
 }
-/*.text-block {*/
-/*    position: absolute;*/
-/*    top: 50%;*/
-/*    left: 50%;*/
-/*}*/
 
+/*project.ejs style*/
+.git {
+    color: black;
+}
+
+/*header.ejs*/
+.directory {
+    background-color: #f2f2f2;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+.directory a {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+}
+
+.directory a:hover {
+    background-color: #ffffcc;
+}
