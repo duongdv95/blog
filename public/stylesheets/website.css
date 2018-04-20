@@ -70,6 +70,10 @@ body {
     margin: 0;
     font-family: Arial;
 }
+h1 {
+    font-size: 2.8rem;
+    text-align: center;
+}
 
 /*edit.ejs style*/
 input, textarea {
@@ -119,3 +123,33 @@ input, textarea {
 .directory a:hover {
     background-color: #ffffcc;
 }
+
+/*contact.ejs*/
+.contact div {
+    font-size: 1.5rem;
+    padding: 10px;
+    text-align: center;
+}
+.contact a {
+    text-decoration: none;
+    color: black;
+}
+
+
+.contact button {
+    display:inline-block;
+}
+
+.linkedin:hover {
+    background-color: #ffffcc;
+}
+
+.contact input {
+    display: inline-block;
+    width: 265px;
+}
+
+.contact input, button {
+    font-size: 1.3rem;
+}
+
