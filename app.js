@@ -8,7 +8,6 @@ var express = require("express"),
     LocalStrategy = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose");
 
-
 // APP CONFIG
 mongoose.connect("mongodb://localhost/blogApp");
 app.set("view engine", "ejs");
@@ -189,6 +188,7 @@ var isLoggedIn = function(req, res, next){
     }
     res.redirect("/blog");
 }
+
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server has started..")
