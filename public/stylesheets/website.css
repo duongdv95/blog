@@ -34,8 +34,6 @@
     text-decoration: none;
     color: black;
     padding: 10px;
-    /*padding-top: 10px;*/
-    /*padding-bottom: 10px;*/
     display: block;
     text-align: center;
     
@@ -58,7 +56,6 @@ li.nav-item {
     padding-right:0;
 }
 
-/* Change the link color on hover */
 .nav-item a:hover {
     background-color: #555;
     color: white;
@@ -68,11 +65,12 @@ html,
 body {
     height: 100%;
     margin: 0;
-    font-family: Arial;
+    font-family: 'Noto Serif', serif;
 }
 h1 {
     font-size: 2.8rem;
     text-align: center;
+    margin: 1.3rem;
 }
 
 /*edit.ejs style*/
@@ -128,7 +126,11 @@ input, textarea {
 .contact div {
     font-size: 1.5rem;
     padding: 10px;
-    text-align: center;
+    /*text-align: center;*/
+}
+.center {
+    width: 440px;
+    margin: 0 auto;
 }
 .contact a {
     text-decoration: none;
@@ -153,3 +155,24 @@ input, textarea {
     font-size: 1.3rem;
 }
 
+#btnClick {
+    padding-right: 15px;
+}
+/*about.ejs*/
+.about {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-gap: 15px;
+    font-size: 1.5rem;
+}
+
+.about img {
+    position: relative;
+    height: 300px;
+    width: 300px;
+    border-radius: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 50px;
+}

@@ -40,7 +40,8 @@ var userSchema = new Schema({
 });
 
 userSchema.plugin(passportLocalMongoose);
-
+ 
+// change blogschema to postschema
 var blogSchema = new Schema({
     title: String,
     image: String,

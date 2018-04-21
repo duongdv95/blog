@@ -4,11 +4,11 @@
     left:50%;
     transform: translate(-50%,-50%);
     text-align: center;
-    font-family: Arial;
+    font-family: 'Noto Serif', serif;
 }
 
 a {
-    text-decoration: none !important;
+    text-decoration: none;
     font-size: 2em;
     color: black;
     font-weight: 500;
@@ -37,6 +37,7 @@ h1 {
     text-shadow: 2px 2px 5px black;
     white-space: nowrap;
     overflow: hidden;
+    margin: 0;
     padding-bottom: 7px;
     letter-spacing: .5rem;
 }
