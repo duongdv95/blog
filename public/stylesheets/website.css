@@ -1,3 +1,6 @@
+:root {
+    --textFont: 1.4rem;
+}
 .container {
   padding-right: 15px;
   padding-left: 15px;
@@ -124,7 +127,7 @@ input, textarea {
 
 /*contact.ejs*/
 .contact div {
-    font-size: 1.5rem;
+    font-size: var(--textFont);
     padding: 10px;
     /*text-align: center;*/
 }
@@ -161,28 +164,26 @@ input, textarea {
 /*about.ejs*/
 .about {
     display: grid;
-    grid-template-rows: 50% 50%;
+    grid-template-columns: 60% 40%;
     grid-gap: 15px;
-    font-size: 1.5rem;
+    font-size: var(--textFont);
 }
 
-.about img {
-    position: relative;
+.about .image-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 225px;
     height: 300px;
-    width: 300px;
-    border-radius: 20%;
     margin-left: auto;
     margin-right: auto;
-    display: none;
-    margin-bottom: 5px;
-}
-
-.about .active-photo {
-    display: block;
+    border-radius: 50%;
 }
 
 .arrows {
     width: 200px;
     margin: 0 auto;
     text-align: center;
+    padding-top: 10px
 }

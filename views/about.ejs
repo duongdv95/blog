@@ -3,14 +3,16 @@
 <div class="container">
     <h1>About me</h1>
     <div class="about">
-        <div>
+        <div class="justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo enim nulla. Vestibulum vel magna vel ante tempus faucibus. Cras scelerisque justo ut iaculis scelerisque. In lacinia eget lacus id feugiat. In fermentum tincidunt orci, id condimentum erat suscipit eu. Donec eu lacinia erat. Nunc non tellus at ipsum dictum cursus. Integer consequat vel orci at pharetra.
         </div>
         <div>
-            <img class="slide-show" src="https://images.unsplash.com/photo-1469938945416-24ed556bbaff?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=64f7b937b3245941c984a83fdec3f0ae&auto=format&fit=crop&w=700&q=60">
-            <img class="slide-show" src="https://images.unsplash.com/photo-1444212477490-ca407925329e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=86d24240ca6b1df611e98ed6bd7a1efc&auto=format&fit=crop&w=800&q=60">
-            <img class="slide-show" src="https://images.unsplash.com/photo-1509119993276-d691aff73209?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bc65ece79e497524debe8521a6b3aa63&auto=format&fit=crop&w=800&q=60">
-            <img class="slide-show" src="https://images.unsplash.com/photo-1523171067267-bb96f975c4bb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f5543be1a7ff160fb20a46b4881860c8&auto=format&fit=crop&w=800&q=60">
+            <div class="image-wrap">
+                <img class="slide-show" src="https://images.unsplash.com/photo-1469938945416-24ed556bbaff?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=64f7b937b3245941c984a83fdec3f0ae&auto=format&fit=crop&w=700&q=60">
+                <img class="slide-show" src="https://images.unsplash.com/photo-1444212477490-ca407925329e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=86d24240ca6b1df611e98ed6bd7a1efc&auto=format&fit=crop&w=800&q=60">
+                <img class="slide-show" src="https://images.unsplash.com/photo-1509119993276-d691aff73209?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bc65ece79e497524debe8521a6b3aa63&auto=format&fit=crop&w=800&q=60">
+                <img class="slide-show" src="https://images.unsplash.com/photo-1523171067267-bb96f975c4bb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f5543be1a7ff160fb20a46b4881860c8&auto=format&fit=crop&w=800&q=60">
+            </div>
             <div class="arrows">
                 <button onClick="changeIndex(-1)">
                     <i class="fas fa-chevron-left"></i> Prev
@@ -26,19 +28,27 @@
 
 <script>
     var photoIndex = 0;
-    var numPhotos = document.getElementsByTagName("img").length;
-    console.log(numPhotos);
+    showPicture(0);
     function changeIndex(change) {
         photoIndex += change;
-        if(photoIndex === numPhotos) {
+        showPicture(photoIndex);
+    }
+    
+    function showPicture(x) {
+        var photoNodeList = document.getElementsByTagName("img");
+        var numPhotos = photoNodeList.length;
+        if(x > numPhotos - 1) {
             photoIndex = 0;
         }
-        console.log(photoIndex);
+        if(x < 0) {
+            photoIndex = numPhotos - 1;
+        }
+        for(var i = 0; i < numPhotos; i++) {
+            photoNodeList[i].style.display = "none";
+        }
+        photoNodeList[photoIndex].style.display = "block";
+        
     }
-    function showPhoto(photoIndex) {
-        var selectPhoto = $(".slide-show");
-        console.log(selectPhoto[0]);
-        $(".slide-show").addClass("active-photo");
-    }
-    showPhoto(1);
+
+
 </script>
