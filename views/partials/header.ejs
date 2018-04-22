@@ -10,25 +10,27 @@
     </head>
     <body>
 <div class="container">
-    <nav>
-        <ul class="nav-items">
-            <li class="nav-item brand">
-                <a id="special" href="/">DanielDuong</a>
-            </li>
-            <li class="nav-item align-right">
+    <div class="navbar">
+        <div>
+            <div class="nav-item brand">
+                <a href="/">DanielDuong</a>
+            </div>
+        </div>
+        <div class="right">
+            <div class="nav-item">
                 <a href="/contact">contact</a>
-            </li>
-            <li class="nav-item align-right">
+            </div>
+            <div class="nav-item">
                 <a href="/blog">blog</a>
-            </li>
-            <li class="nav-item align-right">
+            </div>
+            <div class="nav-item">
                 <a href="/projects">projects</a>
-            </li>
-            <li class="nav-item align-right">
+            </div>
+            <div class="nav-item">
                 <a href="/about">about</a>
-            </li>
-        </ul>
-    </nav>
+            </div>
+        </div>
+    </div>
     <div class="directory">
         <a href="/">Home</a> / <a href="<% query %>"><%= url.substring(1).charAt(0).toUpperCase() + url.substring(2) %></a>
     </div>

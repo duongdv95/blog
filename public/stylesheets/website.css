@@ -24,13 +24,16 @@
 }
 
 /*NAVBAR STYLE*/
-
-.nav-items {
-    list-style-type:none;
-    margin: 0;
-    padding: 0;
+.navbar {
     white-space: nowrap;
     font-size: 1.3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+.right {
+    grid-column-start: 2;
+    grid-column-end: 3;
 }
 
 .nav-item a {
@@ -42,19 +45,16 @@
     
 }
 
-li.nav-item {
+div.nav-item {
     display: inline-block;
-}
-
-.align-right {
-    float: right;
 }
 
 .brand {
     font-weight: 700;
+
 }
 
-#special {
+.brand a {
     padding-left:0;
     padding-right:0;
 }
