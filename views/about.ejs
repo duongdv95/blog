@@ -35,19 +35,12 @@
     }
     
     function showPicture(x) {
-        var photoNodeList = document.getElementsByTagName("img");
+        var photoNodeList = document.querySelectorAll("img");
         var numPhotos = photoNodeList.length;
-        if(x > numPhotos - 1) {
-            photoIndex = 0;
-        }
-        if(x < 0) {
-            photoIndex = numPhotos - 1;
-        }
-        for(var i = 0; i < numPhotos; i++) {
-            photoNodeList[i].style.display = "none";
-        }
+        if(x > numPhotos - 1) {photoIndex = 0;}
+        if(x < 0) {photoIndex = numPhotos - 1;}
+        photoNodeList.forEach(photo => photo.style.display="none");
         photoNodeList[photoIndex].style.display = "block";
-        
     }
 
 
