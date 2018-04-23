@@ -19,7 +19,7 @@ moment().format();
 // passes objects to all routes
 app.use(function(req,res,next){
     res.locals = {
-        moment:moment,
+        moment: moment,
         query : req.query,
         url   : req.originalUrl
     };
@@ -67,19 +67,19 @@ app.get("/", function(req,res){
     res.render("home");
 })
 
-app.get("/about", function(req,res){
-    res.render("about");
+app.get("/about", getBreadcrumbs, function(req,res){
+    res.render("about", {breadcrumbs: req.breadcrumbs});
 })
 
-app.get("/projects", function(req,res){
-    res.render("projects");
+app.get("/projects", getBreadcrumbs, function(req,res){
+    res.render("projects", {breadcrumbs: req.breadcrumbs});
 })
 
-app.get("/contact", function(req,res){
-    res.render("contact");
+app.get("/contact", getBreadcrumbs, function(req,res){
+    res.render("contact", {breadcrumbs: req.breadcrumbs});
 })
 
-app.get("/admin", function(req,res){
+app.get("/admin", getBreadcrumbs, function(req,res){
     res.render("admin");
 })
 
@@ -107,19 +107,19 @@ app.post("/admin", passport.authenticate("local",
 // ==================
 
 // INDEX ROUTE
-app.get("/blog", function(req,res){
+app.get("/blog", getBreadcrumbs, function(req,res){
     Blog.find({}, function(err, allBlogs){
         if(err){
             console.log(err);
         } else {
-            res.render("blog/index", {blogs:allBlogs});
+            res.render("blog/index", {blogs:allBlogs, breadcrumbs: req.breadcrumbs});
         }
     });
 });
 
 // NEW ROUTE
-app.get("/blog/new", function(req,res){
-    res.render("blog/new");
+app.get("/blog/new", getBreadcrumbs, function(req,res){
+    res.render("blog/new", {breadcrumbs: req.breadcrumbs});
 });
 
 // CREATE ROUTE
@@ -135,23 +135,29 @@ app.post("/blog", function(req,res){
 });
 
 // SHOW ROUTE
-app.get("/blog/:id", function(req,res){
+app.get("/blog/:id", getBreadcrumbs, function(req,res){
     Blog.findById(req.params.id, function(err, blogPost){
-        if(err){
+        if(err || !blogPost){
             console.log(err);
+            res.redirect("/blog");
         } else {
-            res.render("blog/show", {blogPost: blogPost});
+            req.breadcrumbs.forEach(function(object){
+            if(object.breadcrumbName === blogPost._id.toString()) {
+                object.breadcrumbName = blogPost.title;
+            }
+            });
+            res.render("blog/show", {blogPost: blogPost, breadcrumbs: req.breadcrumbs});
         }
     });
 });
 
 // EDIT ROUTE
-app.get("/blog/:id/edit", function(req,res){
+app.get("/blog/:id/edit", getBreadcrumbs, function(req,res){
     Blog.findById(req.params.id, function(err, blogPost){
         if(err){
             console.log(err);
         } else {
-            res.render("blog/edit", {blogPost: blogPost});
+            res.render("blog/edit", {blogPost: blogPost, breadcrumbs: req.breadcrumbs});
         }
     });
 });
@@ -189,6 +195,18 @@ var isLoggedIn = function(req, res, next){
     res.redirect("/blog");
 }
 
+function getBreadcrumbs (req, res, next){
+    var rawUrl = req.originalUrl;
+    var splitUrl = rawUrl.split("/");
+    splitUrl.shift();
+    req.breadcrumbs = splitUrl.map(function(element,i){
+        return {
+            breadcrumbName: element.charAt(0).toUpperCase() + element.substring(1),
+            breadcrumbUrl: `/${splitUrl.slice(0, i+1).join('/')}`
+        }
+    })
+    next();
+}
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server has started..")
