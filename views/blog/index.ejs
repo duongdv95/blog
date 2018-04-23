@@ -2,20 +2,23 @@
 
 <div class="container">
     <h1>My Blog</h1>
-    <% blogs.forEach(function(post){ %>
-        <div class="fill">
-            <img src="<%= post.image %>">
-        </div>
-        <strong><%= post.title %></strong>
-        <div>
-            <a href="/blog/<%= post._id %>">Read More</a>
-        </div>
-
-    <% }); %>
+    <div class="index">
+    <table>
+        <% blogs.forEach(function(post){ %>
+            <tr>
+                <td class="post-date">
+                    <%= moment(post.created).format("MMM DD, YYYY"); %>
+                </td>
+                <td class="post-title">
+                    <a href="/blog/<%= post._id %>"><%= post.title %></a>
+                </td>
+            </tr>
+        <% }); %>
+    </table>
     <div>
         <a href="blog/new">New Post</a>
     </div>
-    
+    </div>
 </div>
 
 <% include ../partials/footer %>

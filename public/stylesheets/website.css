@@ -92,20 +92,32 @@ input, textarea {
 }
 
 /*index.ejs style*/
-.fill {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    height: 500px;
+.index td {
+    padding: .25rem .7rem;
+    white-space:nowrap;
 }
 
-.fill img {
-    flex-shrink: 0;
-    min-width: 100%;
-    min-height: 100%;
-    position: relative;
-    z-index: -1;
+.index table, td {
+    border: 1px solid #cce6ff;
+    
+}
+
+.index table {
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.post-title {
+    width: 100%;
+}
+
+.index tr:nth-child(odd) {
+    background-color: #e6f2ff;
+}
+
+.index {
+    line-height: 2;
 }
 
 /*Fixes delete position in show.ejs*/
