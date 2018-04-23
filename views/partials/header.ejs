@@ -33,12 +33,12 @@
     </div>
     <div class="directory">
         <a href="/">Home</a>
-        <% breadcrumbs.forEach(function(object) { %>
-            if(object.breadcrumbUrl.includes(
-            / <a href="<%object.breadcrumbUrl%>"><%=object.breadcrumbName%></a>
-        <% }); %>
-
+        <% if(typeof breadcrumbs === "undefined") { %>
+        <% } else { %>
+            <% breadcrumbs.forEach(function(object) { %>
+                / <a href="<%=object.breadcrumbUrl%>"><%=object.breadcrumbName%></a>
+            <% }) %>
+        <% } %>
     </div>
 </div>
-
 

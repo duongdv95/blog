@@ -19,9 +19,7 @@ moment().format();
 // passes objects to all routes
 app.use(function(req,res,next){
     res.locals = {
-        moment: moment,
-        query : req.query,
-        url   : req.originalUrl
+        moment: moment
     };
     return next();
 });
@@ -118,7 +116,7 @@ app.get("/blog", getBreadcrumbs, function(req,res){
 });
 
 // NEW ROUTE
-app.get("/blog/new", getBreadcrumbs, function(req,res){
+app.get("/blog/new", isLoggedIn, getBreadcrumbs, function(req,res){
     res.render("blog/new", {breadcrumbs: req.breadcrumbs});
 });
 
@@ -188,7 +186,7 @@ app.get("*", function(req,res){
     res.send("Error! Page does not exist")
 })
 
-var isLoggedIn = function(req, res, next){
+function isLoggedIn (req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
@@ -204,7 +202,8 @@ function getBreadcrumbs (req, res, next){
             breadcrumbName: element.charAt(0).toUpperCase() + element.substring(1),
             breadcrumbUrl: `/${splitUrl.slice(0, i+1).join('/')}`
         }
-    })
+    });
+    
     next();
 }
 
