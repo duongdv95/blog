@@ -1,12 +1,16 @@
 <% include ../partials/header %>
 
-<div class="container">
+<div class="container show">
     <div>
         <strong><%= blogPost.title %></strong>
-        <a class="btn btn-primary" href="/blog/<%= blogPost._id %>/edit">Edit Post</a>
-        <form id="delete" action="/blog/<%= blogPost._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-danger" type="submit">Delete Post</button>
-        </form>
+        <% if(currentUser) { %>
+            <button>
+                <a class="btn btn-primary" href="/blog/<%= blogPost._id %>/edit">Edit Post</a>
+            </button>
+            <form id="delete" action="/blog/<%= blogPost._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger" type="submit">Delete Post</button>
+            </form>
+        <% } %>
     </div>
     <div>
         Created <%= moment(blogPost.created).format("dddd, MMMM Do YYYY, h:mm a"); %>

@@ -57,6 +57,7 @@ div.nav-item {
 .brand a {
     padding-left:0;
     padding-right:0;
+    display: inline-block;
 }
 
 .nav-item a:hover {
@@ -83,7 +84,7 @@ body {
 h1 {
     font-size: 2.8rem;
     text-align: center;
-    margin: 1.3rem;
+    margin: 0.9rem;
     white-space: nowrap;
 }
 
@@ -119,6 +120,24 @@ input, textarea {
 
 .index {
     line-height: 2;
+}
+
+.index table a {
+    text-decoration: none;
+    color: blue;
+}
+
+.index table a:visited {
+    color: blue;
+}
+
+.index a:hover {
+    background-color: #ffffcc;
+}
+
+.index a {
+    color: black;
+    text-decoration: none;
 }
 
 /*Fixes delete position in show.ejs*/
@@ -216,4 +235,10 @@ input, textarea {
 .admin {
     width: 200px;
     margin: 0 auto;
+}
+
+/*show.ejs*/
+.show button a {
+    text-decoration: none;
+    color: black;
 }

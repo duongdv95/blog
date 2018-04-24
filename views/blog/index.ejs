@@ -3,21 +3,25 @@
 <div class="container">
     <h1>My Blog</h1>
     <div class="index">
-    <table>
-        <% blogs.forEach(function(post){ %>
-            <tr>
-                <td class="post-date">
-                    <%= moment(post.created).format("MMM DD, YYYY"); %>
-                </td>
-                <td class="post-title">
-                    <a href="/blog/<%= post._id %>"><%= post.title %></a>
-                </td>
-            </tr>
-        <% }); %>
-    </table>
-    <div>
-        <a href="blog/new">New Post</a>
-    </div>
+        <table>
+            <% blogs.forEach(function(post){ %>
+                <tr>
+                    <td class="post-date">
+                        <%= moment(post.created).format("MMM DD, YYYY"); %>
+                    </td>
+                    <td class="post-title">
+                        <a href="/blog/<%= post._id %>"><%= post.title %></a>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+        <div>
+            <% if(currentUser) { %>
+                <button>
+                    <a href="blog/new">New Post</a>
+                </button>
+            <% } %>
+        </div>
     </div>
 </div>
 

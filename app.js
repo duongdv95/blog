@@ -168,7 +168,7 @@ app.get("/blog/:id", getBreadcrumbs, function(req,res){
 });
 
 // EDIT ROUTE
-app.get("/blog/:id/edit", getBreadcrumbs, function(req,res){
+app.get("/blog/:id/edit", isLoggedIn, getBreadcrumbs, function(req,res){
     Blog.findById(req.params.id, function(err, blogPost){
         if(err){
             console.log(err);
@@ -190,7 +190,7 @@ app.put("/blog/:id", function(req,res){
 });
 
 // DESTROY ROUTE
-app.delete("/blog/:id", function(req,res){
+app.delete("/blog/:id", isLoggedIn, function(req,res){
   Blog.findByIdAndRemove(req.params.id, function(err){
       if(err){
           res.redirect("/blog"); 
