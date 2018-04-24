@@ -84,6 +84,7 @@ h1 {
     font-size: 2.8rem;
     text-align: center;
     margin: 1.3rem;
+    white-space: nowrap;
 }
 
 /*edit.ejs style*/
@@ -208,4 +209,11 @@ input, textarea {
     margin: 0 auto;
     text-align: center;
     padding-top: 10px
+}
+
+/*login/register*/
+
+.admin {
+    width: 200px;
+    margin: 0 auto;
 }

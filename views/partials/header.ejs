@@ -13,7 +13,18 @@
     <div class="navbar">
         <div>
             <div class="nav-item brand">
-                <a href="/">DanielDuong</a>
+                <a href="/">
+                    <% if(currentUser){ %>
+                        Admin
+                    <% } else { %>
+                    DanielDuong
+                    <% } %>
+                </a>
+                <% if(currentUser){ %>
+                    <a href="/logout">
+                        Logout
+                    </a>   
+                <% } %>
             </div>
         </div>
         <div class="right">

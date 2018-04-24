@@ -1,14 +1,15 @@
-var express = require("express"),
-    app = express(),
-    bodyParser = require('body-parser'),
-    methodOverride = require("method-override"),
-    mongoose = require("mongoose"),
-    moment = require("moment"),
-    passport = require("passport"),
-    LocalStrategy = require("passport-local"),
+var express               = require("express"),
+    moment                = require("moment"),
+    bodyParser            = require('body-parser'),
+    session               = require("express-session"),
+    methodOverride        = require("method-override"),
+    mongoose              = require("mongoose"),
+    passport              = require("passport"),
+    LocalStrategy         = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose");
 
 // APP CONFIG
+var app = express();
 mongoose.connect("mongodb://localhost/blogApp");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -16,13 +17,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 moment().format();
 
-// passes objects to all routes
-app.use(function(req,res,next){
-    res.locals = {
-        moment: moment
-    };
-    return next();
-});
+
 var db = mongoose.connection;
 db.on("error", console.error.bind(console,"connection error"));
 db.once("open", function(){
@@ -50,16 +45,26 @@ var User = mongoose.model("User", userSchema);
 var Blog = mongoose.model("Blog", blogSchema);
 
 // PASSPORT CONFIGURATION
-app.use(require("express-session")({
+app.use(session({
     secret:"Merp",
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// Passes objects to all routes
+app.use(function(req,res,next){
+    res.locals = {
+        moment: moment,
+        currentUser: req.user
+    };
+    return next();
+});
 
 app.get("/", function(req,res){
     res.render("home");
@@ -77,6 +82,7 @@ app.get("/contact", getBreadcrumbs, function(req,res){
     res.render("contact", {breadcrumbs: req.breadcrumbs});
 })
 
+// Login + Logout
 app.get("/admin", getBreadcrumbs, function(req,res){
     res.render("admin");
 })
@@ -88,7 +94,18 @@ app.post("/admin", passport.authenticate("local",
     }), function(req,res){
 });
 
-// app.post("/admin", function(req,res){
+app.get("/logout", function(req,res){
+    req.logout();
+    res.redirect("/")
+})
+// ===========================================
+//    Disable register route in production
+// ===========================================
+// app.get("/register", getBreadcrumbs, function(req,res){
+//     res.render("register");
+// })
+
+// app.post("/register", function(req,res){
 //     var newUser = new User({username: req.body.username});
 //     User.register(newUser,req.body.password, function(err, user) {
 //         if(err){
@@ -100,6 +117,7 @@ app.post("/admin", passport.authenticate("local",
 //         });
 //     });
 // });
+
 // ==================
 //   RESTful ROUTES
 // ==================
