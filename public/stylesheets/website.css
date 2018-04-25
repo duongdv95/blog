@@ -18,8 +18,13 @@
     .index table {
         font-size: .8rem;
     }
+    .about .justify {
+        margin: 0 auto;
+        width: 470px;
+    }
 
 }
+
 @media (min-width: 768px) {
   .container {
     width: 750px;
@@ -113,7 +118,7 @@ input, textarea {
 }
 
 .index table, td {
-    border: 1px solid #cce6ff;
+    border: 1px solid #e6e6e6;
     
 }
 
@@ -133,7 +138,7 @@ input, textarea {
 }
 
 .index tr:nth-child(odd) {
-    background-color: #e6f2ff;
+    background-color: #f2f2f2;
 }
 
 .index {
@@ -222,9 +227,12 @@ input, textarea {
     padding-right: 15px;
 }
 /*about.ejs*/
+
+.collapse {
+    grid-template-columns: 60% 40%;
+}
 .about {
     display: grid;
-    grid-template-columns: 60% 40%;
     grid-gap: 15px;
     font-size: var(--textFont);
     width: 100%;

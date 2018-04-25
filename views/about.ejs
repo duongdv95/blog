@@ -1,8 +1,8 @@
 <% include partials/header %>
 
 <div class="container">
-    <h1>About me</h1>
-    <div class="about">
+    <h1>About</h1>
+    <div class="about collapse">
         <div class="justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo enim nulla. Vestibulum vel magna vel ante tempus faucibus. Cras scelerisque justo ut iaculis scelerisque. In lacinia eget lacus id feugiat. In fermentum tincidunt orci, id condimentum erat suscipit eu. Donec eu lacinia erat. Nunc non tellus at ipsum dictum cursus. Integer consequat vel orci at pharetra.
         </div>
@@ -42,4 +42,14 @@
         photoNodeList.forEach(photo => photo.style.display="none");
         photoNodeList[photoIndex].style.display = "block";
     }
+    
+    function removeColumns() {
+        var selectAbout = document.querySelector(".about");
+        if(window.innerWidth < 768) {
+            selectAbout.classList.remove("collapse");
+        } else {
+            selectAbout.classList.add("collapse");
+        }
+    }
+    window.addEventListener("resize", removeColumns); 
 </script>
