@@ -2,7 +2,7 @@
 
 <div class="container show">
     <div>
-        <strong><%= blogPost.title %></strong>
+        <h1><%= blogPost.title %></h1>
         <% if(currentUser) { %>
             <button>
                 <a class="btn btn-primary" href="/blog/<%= blogPost._id %>/edit">Edit Post</a>
