@@ -16,6 +16,12 @@
             <% }); %>
         </table>
         <div>
+            Page
+            <% for(var i = 1; i < pageNums + 1; i++){ %>
+                <a href="/blog/page/<%= i %>"><%= i %></a>
+            <% } %>
+        </div>
+        <div>
             <% if(currentUser) { %>
                 <button>
                     <a href="blog/new">New Post</a>

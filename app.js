@@ -1,4 +1,5 @@
 var express               = require("express"),
+    _                     = require("lodash"),
     moment                = require("moment"),
     bodyParser            = require('body-parser'),
     session               = require("express-session"),
@@ -122,12 +123,23 @@ app.get("/logout", function(req,res){
 // ==================
 
 // INDEX ROUTE
-app.get("/blog", getBreadcrumbs, function(req,res){
+
+app.get("/blog", function(req,res) {
+    res.redirect("/blog/page/1")
+});
+app.get("/blog/page/:pageId", getBreadcrumbs, function(req,res){
     Blog.find({}, function(err, allBlogs){
         if(err){
             console.log(err);
         } else {
-            res.render("blog/index", {blogs:allBlogs, breadcrumbs: req.breadcrumbs});
+            var pageId = Number(req.params.pageId) - 1;
+            var blogList = Array.from(allBlogs);
+            var chunkedList = _.chunk(blogList, 10);
+            res.render("blog/index", {
+                                        blogs:chunkedList[pageId], 
+                                        pageNums: chunkedList.length,
+                                        breadcrumbs: req.breadcrumbs
+                                    });
         }
     });
 });
