@@ -36,7 +36,6 @@ userSchema.plugin(passportLocalMongoose);
 // change blogschema to postschema
 var blogSchema = new Schema({
     title: String,
-    image: String,
     body: String,
     created: {type: Date, default: Date.now}
 });
@@ -221,9 +220,24 @@ function getBreadcrumbs (req, res, next){
             breadcrumbUrl: `/${splitUrl.slice(0, i+1).join('/')}`
         }
     });
-    
     next();
 }
+
+// function seedBlog() {
+//     let seedPost = {
+//         title: "seedpost",
+//         body: "Spicy jalapeno bacon ipsum dolor amet prosciutto burgdoggen pork chop, ribeye salami kevin sausage bacon chicken frankfurter landjaeger swine tri-tip alcatra shank. Cupim chicken pork meatball, ribeye tenderloin frankfurter biltong porchetta filet mignon short loin tri-tip sirloin corned beef. Rump hamburger ribeye brisket tenderloin flank, cupim pig beef tongue capicola beef ribs burgdoggen. Beef ribs picanha pig corned beef hamburger tenderloin pancetta pork tail short ribs bacon leberkas short loin."
+//     }
+//     Blog.create(seedPost, function(err,blogPost){
+//         if(err){
+//             console.log(err);
+//         }
+//     });
+// }
+
+// for(let i = 0; i < 10; i++) {
+//     seedBlog();
+// }
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server has started..")
