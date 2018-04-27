@@ -8,12 +8,8 @@
             <input type="text" name="blog[title]" placeholder="title" id="title"></input>
         </div>
         <div class="form-group">
-            <label>Image</label>
-            <input type="text" name="blog[image]" placeholder="image URL" id="image"></input>
-        </div>
-        <div class="form-group">
             <label>Body</label>
-            <textarea name="blog[body]" id="body"></textarea>
+            <textarea name="blog[body]" id="body" placeholder="body"></textarea>
         </div>
         <input type="submit">
     </form>
@@ -24,8 +20,7 @@
 <script>
     $("#form").submit(function() {
         var title = $.trim($("#title").val());
-        var image = $.trim($("#image").val());;
-        var body = $.trim($("#body").val())
+        var body = $.trim($("#body").val());
         if (title === "" || image === "" || body === ""){
             return false;
         }
