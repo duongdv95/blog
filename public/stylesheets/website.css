@@ -15,8 +15,8 @@
 }
 
 @media (min-width: 500px) and (max-width: 768px) {
-    .index table {
-        font-size: .8rem;
+    #table {
+        width: 483.72px;
     }
     .about .justify {
         margin: 0 auto;
@@ -30,16 +30,16 @@
     width: 750px;
   }
 }
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
-}
+/*@media (min-width: 992px) {*/
+/*  .container {*/
+/*    width: 970px;*/
+/*  }*/
+/*}*/
+/*@media (min-width: 1200px) {*/
+/*  .container {*/
+/*    width: 1170px;*/
+/*  }*/
+/*}*/
 
 /*NAVBAR STYLE*/
 .navbar {
@@ -109,6 +109,22 @@ h1 {
 /*edit.ejs style*/
 input, textarea {
     display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.submit {
+    width: 20%;
+}
+textarea {
+    height: 300px;
+    resize: none;
+}
+.edit label {
+    display: block;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
 }
 
 /*index.ejs style*/

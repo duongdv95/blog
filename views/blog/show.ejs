@@ -13,9 +13,8 @@
         <% } %>
     </div>
     <div>
-        Created <%= moment(blogPost.created).format("dddd, MMMM Do YYYY, h:mm a"); %>
+        Created <%= moment(blogPost.created).format("dddd, MMMM Do YYYY"); %>
     </div>
-    <img src="<%= blogPost.image %>">
     <div>
         <%- blogPost.body %>
     </div>
