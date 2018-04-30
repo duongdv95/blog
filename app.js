@@ -1,4 +1,5 @@
 var express               = require("express"),
+    app                   = express(),
     _                     = require("lodash"),
     moment                = require("moment"),
     bodyParser            = require('body-parser'),
@@ -7,10 +8,17 @@ var express               = require("express"),
     mongoose              = require("mongoose"),
     passport              = require("passport"),
     LocalStrategy         = require("passport-local"),
-    passportLocalMongoose = require("passport-local-mongoose");
+    passportLocalMongoose = require("passport-local-mongoose"),
+    User                  = require("./models/user"),
+    Blog                  = require("./models/blog");
 
+// =========================
+//          ROUTES
+// =========================
+var blogRoutes            = require("./controller/blogs"),
+    indexRoutes           = require("./controller/index");
+    
 // APP CONFIG
-var app = express();
 mongoose.connect("mongodb://localhost/blogApp");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -18,31 +26,11 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 moment().format();
 
-
 var db = mongoose.connection;
 db.on("error", console.error.bind(console,"connection error"));
 db.once("open", function(){
     console.log("we're connected!");
 });
-// MONGOOSE/CONTROLLER CONFIG
-var Schema = mongoose.Schema;
-
-var userSchema = new Schema({
-    username: String,
-    password: String
-});
-
-userSchema.plugin(passportLocalMongoose);
- 
-// change blogschema to postschema
-var blogSchema = new Schema({
-    title: String,
-    body: String,
-    created: {type: Date, default: Date.now}
-});
-
-var User = mongoose.model("User", userSchema);
-var Blog = mongoose.model("Blog", blogSchema);
 
 // PASSPORT CONFIGURATION
 app.use(session({
@@ -59,197 +47,12 @@ passport.deserializeUser(User.deserializeUser());
 
 // Passes objects to all routes
 app.use(function(req,res,next){
-    res.locals = {
-        moment: moment,
-        currentUser: req.user
-    };
+    res.locals = {moment: moment, currentUser: req.user};
     return next();
 });
 
-app.get("/", function(req,res){
-    res.render("home");
-})
-
-app.get("/about", getBreadcrumbs, function(req,res){
-    res.render("about", {breadcrumbs: req.breadcrumbs});
-})
-
-app.get("/projects", getBreadcrumbs, function(req,res){
-    res.render("projects", {breadcrumbs: req.breadcrumbs});
-})
-
-app.get("/contact", getBreadcrumbs, function(req,res){
-    res.render("contact", {breadcrumbs: req.breadcrumbs});
-})
-
-// Login + Logout
-app.get("/admin", getBreadcrumbs, function(req,res){
-    res.render("admin");
-})
-
-app.post("/admin", passport.authenticate("local", 
-    {
-        successRedirect:"/blog",
-        failureRedirect:"/admin"
-    }), function(req,res){
-});
-
-app.get("/logout", function(req,res){
-    req.logout();
-    res.redirect("/")
-})
-// ===========================================
-//    Disable register route in production
-// ===========================================
-// app.get("/register", getBreadcrumbs, function(req,res){
-//     res.render("register");
-// })
-
-// app.post("/register", function(req,res){
-//     var newUser = new User({username: req.body.username});
-//     User.register(newUser,req.body.password, function(err, user) {
-//         if(err){
-//             console.log(err);
-//             return res.render("admin",{error: err.message});
-//         }
-//         passport.authenticate("local")(req, res, function(){
-//             res.redirect("/");
-//         });
-//     });
-// });
-
-// ==================
-//   RESTful ROUTES
-// ==================
-
-// INDEX ROUTE
-
-app.get("/blog", function(req,res) {
-    res.redirect("/blog/page/1")
-});
-app.get("/blog/page/:pageId", getBreadcrumbs, function(req,res){
-    Blog.find({}, function(err, allBlogs){
-        if(err){
-            console.log(err);
-        } else {
-            var pageId = Number(req.params.pageId) - 1;
-            var blogList = Array.from(allBlogs);
-            var chunkedList = _.chunk(blogList, 10);
-            res.render("blog/index", {
-                                        blogs:chunkedList[pageId], 
-                                        pageNums: chunkedList.length,
-                                        breadcrumbs: req.breadcrumbs
-                                    });
-        }
-    });
-});
-
-// NEW ROUTE
-app.get("/blog/new", isLoggedIn, getBreadcrumbs, function(req,res){
-    res.render("blog/new", {breadcrumbs: req.breadcrumbs});
-});
-
-// CREATE ROUTE
-app.post("/blog", function(req,res){
-    var newBlogPost = req.body.blog;
-    Blog.create(newBlogPost, function(err,blogPost){
-        if(err){
-            console.log(err);
-        } else {
-            res.redirect("/blog");
-        }
-    });
-});
-
-// SHOW ROUTE
-app.get("/blog/:id", getBreadcrumbs, function(req,res){
-    Blog.findById(req.params.id, function(err, blogPost){
-        if(err || !blogPost){
-            console.log(err);
-            res.redirect("/blog");
-        } else {
-            req.breadcrumbs.forEach(function(object){
-            if(object.breadcrumbName === blogPost._id.toString()) {
-                object.breadcrumbName = blogPost.title;
-            }
-            });
-            res.render("blog/show", {blogPost: blogPost, breadcrumbs: req.breadcrumbs});
-        }
-    });
-});
-
-// EDIT ROUTE
-app.get("/blog/:id/edit", isLoggedIn, getBreadcrumbs, function(req,res){
-    Blog.findById(req.params.id, function(err, blogPost){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("blog/edit", {blogPost: blogPost, breadcrumbs: req.breadcrumbs});
-        }
-    });
-});
-
-// UPDATE ROUTE
-app.put("/blog/:id", function(req,res){
-    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedPost) {
-        if(err){
-            res.redirect("/blog/" + req.params.id);
-        } else {
-            res.redirect("/blog/" + req.params.id);
-        }
-    });
-});
-
-// DESTROY ROUTE
-app.delete("/blog/:id", isLoggedIn, function(req,res){
-  Blog.findByIdAndRemove(req.params.id, function(err){
-      if(err){
-          res.redirect("/blog"); 
-      } else {
-          res.redirect("/blog");
-      }
-  });
-});
-
-app.get("*", function(req,res){
-    res.send("Error! Page does not exist")
-})
-
-function isLoggedIn (req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/blog");
-}
-
-function getBreadcrumbs (req, res, next){
-    var rawUrl = req.originalUrl;
-    var splitUrl = rawUrl.split("/");
-    splitUrl.shift();
-    req.breadcrumbs = splitUrl.map(function(element,i){
-        return {
-            breadcrumbName: element.charAt(0).toUpperCase() + element.substring(1),
-            breadcrumbUrl: `/${splitUrl.slice(0, i+1).join('/')}`
-        }
-    });
-    next();
-}
-
-// function seedBlog() {
-//     let seedPost = {
-//         title: "seedpost",
-//         body: "Spicy jalapeno bacon ipsum dolor amet prosciutto burgdoggen pork chop, ribeye salami kevin sausage bacon chicken frankfurter landjaeger swine tri-tip alcatra shank. Cupim chicken pork meatball, ribeye tenderloin frankfurter biltong porchetta filet mignon short loin tri-tip sirloin corned beef. Rump hamburger ribeye brisket tenderloin flank, cupim pig beef tongue capicola beef ribs burgdoggen. Beef ribs picanha pig corned beef hamburger tenderloin pancetta pork tail short ribs bacon leberkas short loin."
-//     }
-//     Blog.create(seedPost, function(err,blogPost){
-//         if(err){
-//             console.log(err);
-//         }
-//     });
-// }
-
-// for(let i = 0; i < 10; i++) {
-//     seedBlog();
-// }
+app.use(indexRoutes);
+app.use(blogRoutes);
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Server has started..")
