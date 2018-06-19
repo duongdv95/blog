@@ -8,6 +8,7 @@ var express = require("express"),
 router.get("/blog", function(req,res) {
     res.redirect("/blog/page/1")
 });
+
 router.get("/blog/page/:pageId", middleware.getBreadcrumbs, function(req,res){
     Blog.find({}, function(err, allBlogs){
         if(err){
@@ -83,7 +84,7 @@ router.put("/blog/:id", function(req,res){
 
 // DESTROY ROUTE
 router.delete("/blog/:id", middleware.isLoggedIn, function(req,res){
-  Blog.findByIdAndRemove(req.params.id, function(err){
+  Blog.findByIdAndRemove(req.params.id, function(err) {
       if(err){
           res.redirect("/blog"); 
       } else {
@@ -92,8 +93,9 @@ router.delete("/blog/:id", middleware.isLoggedIn, function(req,res){
   });
 });
 
-router.get("*", function(req,res){
+router.get("*", function(req,res) {
     res.send("Error! Page does not exist")
 })
+
 
 module.exports = router;

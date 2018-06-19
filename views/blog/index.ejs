@@ -4,6 +4,7 @@
     <h1>Blog</h1>
     <div class="index">
         <table id="table">
+            <% if(blogs) { %>
             <% blogs.forEach(function(post){ %>
                 <tr>
                     <td class="post-date">
@@ -14,6 +15,8 @@
                     </td>
                 </tr>
             <% }); %>
+            <% } %>
+
         </table>
         <div>
             Page
