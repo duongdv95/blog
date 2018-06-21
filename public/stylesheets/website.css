@@ -275,6 +275,9 @@ textarea {
     padding-top: 10px
 }
 
+#blog-index-page-number {
+    padding-left: 10px;
+}
 /*login/register*/
 
 .admin {

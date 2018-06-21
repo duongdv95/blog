@@ -45,6 +45,7 @@ router.post("/blog", function(req,res){
 
 // SHOW ROUTE
 router.get("/blog/:id", middleware.getBreadcrumbs, function(req,res){
+
     Blog.findById(req.params.id, function(err, blogPost){
         if(err || !blogPost){
             console.log(err);
