@@ -36,12 +36,18 @@
 
 <script>
     var selectEveryPost = document.getElementsByClassName("post");
+    var selectPageNumbers = document.getElementsByClassName("page-number");
     for(i=10;i<selectEveryPost.length;i++){
         selectEveryPost[i].classList.add("hide");
     }
+    selectPageNumbers[0].classList.add("current-page");
     
     function clickPageNumber(selectedPage) {
-        var pageNumber = selectedPage.getAttribute("data-value")
+        for(i=0;i<selectPageNumbers.length;i++) {
+            selectPageNumbers[i].classList.remove("current-page");
+        }
+        selectedPage.classList.add("current-page");
+        var pageNumber = selectedPage.getAttribute("data-value");
         pageNumberToBlogRange(pageNumber);
     }
     

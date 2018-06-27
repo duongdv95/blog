@@ -170,7 +170,7 @@ textarea {
     color: blue;
 }
 
-.index a:hover {
+.index table a:hover {
     background-color: #ffffcc;
 }
 
@@ -183,9 +183,19 @@ textarea {
     display: none;
 }
 
+#blog-index-page-number {
+    padding-right: 10px;
+    text-align: right;
+}
+
+#blog-index-page-number .current-page {
+    background: #555;
+    color: white;
+    padding: 4px;
+}
 /*Fixes delete position in show.ejs*/
 #delete {
-    display:inline;
+    display: inline;
 }
 
 /*project.ejs style*/
@@ -279,9 +289,6 @@ textarea {
     padding-top: 10px
 }
 
-#blog-index-page-number {
-    padding-left: 10px;
-}
 /*login/register*/
 
 .admin {
