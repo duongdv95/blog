@@ -6,7 +6,7 @@
         <table id="table">
             <% if(blogs) { %>
             <% blogs.forEach(function(post){ %>
-                <tr>
+                <tr class="post">
                     <td class="post-date">
                         <%= moment(post.created).format("MMM DD, YYYY"); %>
                     </td>
@@ -21,7 +21,7 @@
         <div id="blog-index-page-number">
             Page
             <% for(var i = 1; i < pageNums + 1; i++){ %>
-                <a href="/blog/page/<%= i %>"><%= i %></a>
+                <a onClick="clickPageNumber(this); event.preventDefault();" class="page-number" href="#" data-value="<%= i %>"><%= i %></a>
             <% } %>
         </div>
         <div>
@@ -33,5 +33,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    var selectEveryPost = document.getElementsByClassName("post");
+    for(i=10;i<selectEveryPost.length;i++){
+        selectEveryPost[i].classList.add("hide");
+    }
+    
+    function clickPageNumber(selectedPage) {
+        var pageNumber = selectedPage.getAttribute("data-value")
+        pageNumberToBlogRange(pageNumber);
+    }
+    
+    function pageNumberToBlogRange(pageNumber) {
+        var start = pageNumber*10 - 10;
+        var end = (pageNumber*10 + 9) - 10;
+        changePage(start,end);
+    } 
+    
+    function changePage(start, end) {
+        for(i=0;i<selectEveryPost.length;i++){
+            selectEveryPost[i] && selectEveryPost[i].classList.add("hide");
+        }
+        for(var i=start; i<end+1; i++) {
+            selectEveryPost[i] && selectEveryPost[i].classList.remove("hide");
+        };
+    };
+</script>
 
 <% include ../partials/footer %>

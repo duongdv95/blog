@@ -179,6 +179,10 @@ textarea {
     text-decoration: none;
 }
 
+.hide {
+    display: none;
+}
+
 /*Fixes delete position in show.ejs*/
 #delete {
     display:inline;

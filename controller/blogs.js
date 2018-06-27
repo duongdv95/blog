@@ -2,32 +2,29 @@ var express = require("express"),
     router  = express.Router(),
     _       = require("lodash"),
     Blog    = require("../models/blog"),
-    middleware = require("../middleware");
+    {isLoggedIn, getBreadcrumbs, seedBlog} = require("../middleware");
 
 // INDEX ROUTE
-router.get("/blog", function(req,res) {
-    res.redirect("/blog/page/1")
-});
-
-router.get("/blog/page/:pageId", middleware.getBreadcrumbs, function(req,res){
+router.get("/blog", getBreadcrumbs, function(req,res) {
+    // res.redirect("/blog/page/1")
     Blog.find({}, function(err, allBlogs){
         if(err){
             console.log(err);
         } else {
-            var pageId = Number(req.params.pageId) - 1;
-            var blogList = Array.from(allBlogs);
-            var chunkedList = _.chunk(blogList, 10);
+            var newestFirstBlogList = _.reverse(Array.from(allBlogs));
+            var pageNums = Math.ceil(allBlogs.length/10);
             res.render("blog/index", {
-                                        blogs:chunkedList[pageId], 
-                                        pageNums: chunkedList.length,
+                                        blogs: newestFirstBlogList,
+                                        pageNums: pageNums,
                                         breadcrumbs: req.breadcrumbs
                                     });
         }
     });
+
 });
 
 // NEW ROUTE
-router.get("/blog/new", middleware.isLoggedIn, middleware.getBreadcrumbs, function(req,res){
+router.get("/blog/new", isLoggedIn, getBreadcrumbs, function(req,res){
     res.render("blog/new", {breadcrumbs: req.breadcrumbs});
 });
 
@@ -44,7 +41,7 @@ router.post("/blog", function(req,res){
 });
 
 // SHOW ROUTE
-router.get("/blog/:id", middleware.getBreadcrumbs, function(req,res){
+router.get("/blog/:id", getBreadcrumbs, function(req,res){
 
     Blog.findById(req.params.id, function(err, blogPost){
         if(err || !blogPost){
@@ -62,7 +59,7 @@ router.get("/blog/:id", middleware.getBreadcrumbs, function(req,res){
 });
 
 // EDIT ROUTE
-router.get("/blog/:id/edit", middleware.isLoggedIn, middleware.getBreadcrumbs, function(req,res){
+router.get("/blog/:id/edit", isLoggedIn, getBreadcrumbs, function(req,res){
     Blog.findById(req.params.id, function(err, blogPost){
         if(err){
             console.log(err);
@@ -84,7 +81,7 @@ router.put("/blog/:id", function(req,res){
 });
 
 // DESTROY ROUTE
-router.delete("/blog/:id", middleware.isLoggedIn, function(req,res){
+router.delete("/blog/:id", isLoggedIn, function(req,res){
   Blog.findByIdAndRemove(req.params.id, function(err) {
       if(err){
           res.redirect("/blog"); 

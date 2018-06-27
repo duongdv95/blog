@@ -10,7 +10,8 @@ var express               = require("express"),
     LocalStrategy         = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose"),
     User                  = require("./models/user"),
-    Blog                  = require("./models/blog");
+    Blog                  = require("./models/blog"),
+    middleware = require("./middleware");
 
 // =========================
 //          ROUTES

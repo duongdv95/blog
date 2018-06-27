@@ -1,9 +1,9 @@
 var express = require("express"),
     router  = express.Router(),
     passport = require("passport"),
-    middleware = require("../middleware");
+    {isLoggedIn, getBreadcrumbs, seedBlog} = require("../middleware");
 
-router.get("/about", middleware.getBreadcrumbs, function(req,res){
+router.get("/about", getBreadcrumbs, function(req,res){
     res.render("about", {breadcrumbs: req.breadcrumbs});
 })
 
@@ -11,16 +11,16 @@ router.get("/", function(req,res){
     res.render("home");
 })
 
-router.get("/projects", middleware.getBreadcrumbs, function(req,res){
+router.get("/projects", getBreadcrumbs, function(req,res){
     res.render("projects", {breadcrumbs: req.breadcrumbs});
 })
 
-router.get("/contact", middleware.getBreadcrumbs, function(req,res){
+router.get("/contact", getBreadcrumbs, function(req,res){
     res.render("contact", {breadcrumbs: req.breadcrumbs});
 })
 
 // Login + Logout
-router.get("/admin", middleware.getBreadcrumbs, function(req,res){
+router.get("/admin", getBreadcrumbs, function(req,res){
     res.render("admin");
 })
 
