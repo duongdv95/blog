@@ -19,7 +19,7 @@ var express               = require("express"),
 var blogRoutes            = require("./controller/blogs"),
     indexRoutes           = require("./controller/index");
     
-// APP CONFIG
+// APP CONFIG 
 mongoose.connect("mongodb://localhost/blogApp");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));

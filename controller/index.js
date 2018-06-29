@@ -1,6 +1,7 @@
 var express = require("express"),
     router  = express.Router(),
     passport = require("passport"),
+    User = require("../models/user"),
     {isLoggedIn, getBreadcrumbs, seedBlog} = require("../middleware");
 
 router.get("/about", getBreadcrumbs, function(req,res){
