@@ -9,7 +9,8 @@ router.get("/about", getBreadcrumbs, function(req,res){
 })
 
 router.get("/", function(req,res){
-    res.render("home");
+    // res.render("home");
+    res.redirect("/about");
 })
 
 router.get("/projects", getBreadcrumbs, function(req,res){
