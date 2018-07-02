@@ -1,6 +1,5 @@
 var express               = require("express"),
     app                   = express(),
-    _                     = require("lodash"),
     moment                = require("moment"),
     bodyParser            = require('body-parser'),
     session               = require("express-session"),
@@ -11,7 +10,7 @@ var express               = require("express"),
     passportLocalMongoose = require("passport-local-mongoose"),
     User                  = require("./models/user"),
     Blog                  = require("./models/blog"),
-    middleware = require("./middleware");
+    config                = require("./config.json");
 
 // =========================
 //          ROUTES
@@ -20,7 +19,7 @@ var blogRoutes            = require("./controller/blogs"),
     indexRoutes           = require("./controller/index");
     
 // APP CONFIG 
-mongoose.connect("mongodb://localhost/blogApp");
+mongoose.connect("mongodb://localhost/blogApp" || config.database);
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
