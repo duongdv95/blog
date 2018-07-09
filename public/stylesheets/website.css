@@ -2,16 +2,18 @@
     --textFont: 1.4rem;
 }
 .container {
-  padding-right: 15px;
-  padding-left: 15px;
+  /*padding-right: 15px;*/
+  /*padding-left: 15px;*/
   margin-right: auto;
   margin-left: auto;
 }
-.container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+
+@media only screen and (max-width: 480px) {
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 }
 
 @media (min-width: 500px) and (max-width: 768px) {
@@ -22,6 +24,9 @@
         margin: 0 auto;
         width: 470px;
     }
+    .container {
+        width: 500px;
+    }
 
 }
 
@@ -30,16 +35,6 @@
     width: 750px;
   }
 }
-/*@media (min-width: 992px) {*/
-/*  .container {*/
-/*    width: 970px;*/
-/*  }*/
-/*}*/
-/*@media (min-width: 1200px) {*/
-/*  .container {*/
-/*    width: 1170px;*/
-/*  }*/
-/*}*/
 
 /*NAVBAR STYLE*/
 .navbar {
@@ -308,4 +303,9 @@ textarea {
 .show button a {
     text-decoration: none;
     color: black;
+}
+
+.show img {
+    max-height: 100%;
+    max-width: 100%;
 }
