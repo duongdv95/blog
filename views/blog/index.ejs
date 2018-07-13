@@ -4,6 +4,14 @@
     <h1>Blog</h1>
     <div class="index">
         <table id="table">
+            <tr class="header">
+                <th align="left" class="header">
+                    Date
+                </th>
+                <th align="left" class="header">
+                    Post
+                </th>
+            </tr>
             <% if(blogs) { %>
             <% blogs.forEach(function(post){ %>
                 <tr class="post">

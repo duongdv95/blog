@@ -131,12 +131,19 @@ textarea {
 }
 
 /*index.ejs style*/
+.header {
+    background-color: #f2f2f2;
+}
+
+.header {
+    padding-left: 14px;
+}
 .index td {
     padding: .25rem .7rem;
     white-space:nowrap;
 }
 
-.index table, td {
+.index table, td, th {
     border: 1px solid #e6e6e6;
     
 }
@@ -156,10 +163,13 @@ textarea {
     width: 20%;
 }
 
-.index tr:nth-child(odd) {
+/*.index tr:nth-child(odd) {*/
+/*    background-color: #f2f2f2;*/
+/*}*/
+
+.index .post:hover {
     background-color: #f2f2f2;
 }
-
 .index {
     line-height: 2;
 }
@@ -260,6 +270,23 @@ textarea {
     padding-right: 15px;
 }
 /*about.ejs*/
+
+.btn-light {
+  color: #212529;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.btn-light:hover {
+  color: #212529;
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
+}
+
+.btn-light:focus, .btn-light.focus {
+  box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
+}
+/*Above btn-light grabbed from bootstrap*/
 
 .collapse {
     grid-template-columns: 60% 40%;
