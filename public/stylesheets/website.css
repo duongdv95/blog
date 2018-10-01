@@ -285,6 +285,7 @@ textarea {
 
 .btn-light:focus, .btn-light.focus {
   box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
+  outline: 0;
 }
 /*Above btn-light grabbed from bootstrap*/
 
@@ -332,7 +333,7 @@ textarea {
     color: black;
 }
 
-.show img {
+.show img, iframe {
     max-height: 100%;
     max-width: 100%;
 }
